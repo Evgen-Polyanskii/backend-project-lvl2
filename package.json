@@ -1,0 +1,26 @@
+{
+  "name": "@hexlet/code",
+  "version": "0.0.1",
+  "description": "Compares two configuration files and shows a difference.",
+  "bin": {
+    "gendiff": "gendiff.js"
+  },
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Evgen-Polyanskii/backend-project-lvl2.git"
+  },
+  "author": "Evgen-Polianskii",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Evgen-Polyanskii/backend-project-lvl2/issues"
+  },
+  "homepage": "https://github.com/Evgen-Polyanskii/backend-project-lvl2#readme",
+  "dependencies": {
+    "commander": "^8.1.0"
+  }
+}
