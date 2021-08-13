@@ -1,3 +1,4 @@
+/* eslint operator-linebreak: 0 */
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { readFileSync } from 'fs';
