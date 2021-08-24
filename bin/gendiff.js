@@ -2,14 +2,15 @@
 
 import { Command } from 'commander';
 import gendiff from '../index.js';
+import getProjectProperties from '../src/getProjectProperties.js';
 
 const program = new Command();
 
 program
-  .description('Compares two configuration files and shows a difference.')
-  .version('v0.0.1')
-  .arguments('<filepath1> <filepath2>')
-  .option('-f, --format [type]', 'Output format')
-  .action((filepath1, filepath2) => console.log(gendiff(filepath1, filepath2)));
+  .description(getProjectProperties('description'))
+  .version(getProjectProperties('version'))
+  .arguments('<file1> <file2>')
+  .option('-f, --format <type>', 'Output format', 'stylish')
+  .action((file1, file2) => console.log(gendiff(file1, file2, program.opts().format)));
 
 program.parse(process.argv);
