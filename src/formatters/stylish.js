@@ -18,7 +18,7 @@ function stringify(values, depth) {
 }
 
 const buildersStr = {
-  deleted: ({ key, value }, { depth }) => `  - ${key}: ${stringify(value, depth)}`,
+  removed: ({ key, value }, { depth }) => `  - ${key}: ${stringify(value, depth)}`,
   added: ({ key, value }, { depth }) => `  + ${key}: ${stringify(value, depth)}`,
   modified: ({ key, value, newValue }, { depth }) => [
     `  - ${key}: ${stringify(value, depth)}`,

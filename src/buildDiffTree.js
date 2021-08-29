@@ -11,7 +11,7 @@ const buildDiffTree = (object1, object2) => {
       return {
         key,
         value: value1,
-        type: 'deleted',
+        type: 'removed',
       };
     }
     if (!_.has(object1, key)) {

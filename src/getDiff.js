@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import { resolve, extname } from 'path';
 import buildDiffTree from './buildDiffTree.js';
 import parsers from './parsers.js';
-import stylish from './stylish.js';
+import getOutputFormat from './formatters/index.js';
 
 const getPathToFileAndFormat = (file) => {
   const path = resolve(file);
@@ -11,13 +11,6 @@ const getPathToFileAndFormat = (file) => {
 };
 
 const getFileContents = (file) => readFileSync(file, 'utf8');
-
-const getOutputFormat = (requiredFormat) => {
-  const formats = {
-    stylish: (tree) => stylish(tree),
-  };
-  return formats[requiredFormat];
-};
 
 export default (file1, file2, requiredFormat = 'stylish') => {
   const [filePath1, formatFile1] = getPathToFileAndFormat(file1);
