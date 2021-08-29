@@ -5,4 +5,4 @@
 [![Node CI](https://github.com/Evgen-Polyanskii/backend-project-lvl2/actions/workflows/ci.yml/badge.svg)](https://github.com/Evgen-Polyanskii/backend-project-lvl2/actions)
 
 Example of working gendiff
-[![asciicast](https://asciinema.org/a/yvCAFDtqHY9lT7MTytebMjPxi.svg)](https://asciinema.org/a/yvCAFDtqHY9lT7MTytebMjPxi)
+[![asciicast](https://asciinema.org/a/h0K9omfv5ozl6rVLV4uhcCFa7.svg)](https://asciinema.org/a/h0K9omfv5ozl6rVLV4uhcCFa7)
