@@ -13,28 +13,28 @@ describe('Сhecking to get the difference between files', () => {
   test('Expansion .json and format stylish', () => {
     const file1 = getFixturePath('before1.json');
     const file2 = getFixturePath('before2.json');
-    const diff = readFileSync(getFixturePath('after1(json)'), 'utf8');
+    const diff = readFileSync(getFixturePath('stylishResult1'), 'utf8');
     expect(getDiff(file1, file2)).toEqual(diff);
   });
 
   test('Expansion .yaml and format stylish', () => {
     const file1 = getFixturePath('before1.yml');
     const file2 = getFixturePath('before2.yaml');
-    const diff = readFileSync(getFixturePath('after1(yaml)'), 'utf8');
+    const diff = readFileSync(getFixturePath('stylishResult2'), 'utf8');
     expect(getDiff(file1, file2)).toEqual(diff);
   });
 
   test('Checking the output in the format plain', () => {
     const file1 = getFixturePath('before1.json');
     const file2 = getFixturePath('before2.json');
-    const diff = readFileSync(getFixturePath('after2(plain)'), 'utf8');
+    const diff = readFileSync(getFixturePath('plainResult'), 'utf8');
     expect(getDiff(file1, file2, 'plain')).toEqual(diff);
   });
 
   test('Checking the output in the format json', () => {
     const file1 = getFixturePath('before3.yml');
     const file2 = getFixturePath('before4.yml');
-    const diff = readFileSync(getFixturePath('after3(json)'), 'utf8');
+    const diff = readFileSync(getFixturePath('jsonResult'), 'utf8');
     expect(getDiff(file1, file2, 'json')).toEqual(diff);
   });
 });

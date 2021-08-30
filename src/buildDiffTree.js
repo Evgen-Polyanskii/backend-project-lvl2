@@ -20,10 +20,7 @@ const buildDiffTree = (object1, object2) => {
       return { key, type: 'nested', children: buildDiffTree(value1, value2) };
     }
     return {
-      key,
-      value: value1,
-      newValue: value2,
-      type: 'modified',
+      key, value: value1, newValue: value2, type: 'modified',
     };
   });
 };

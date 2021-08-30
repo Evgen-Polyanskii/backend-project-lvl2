@@ -12,32 +12,30 @@ const stringify = (value) => {
 
 const getFullKey = (parent, key) => (parent ? `${parent}.${key}` : key);
 
-const buildStr = (node) => {
-  switch (node.type) {
-    case 'removed':
-      return 'removed';
-    case 'added':
-      return `added with value: ${stringify(node.value)}`;
-    case 'modified':
-      return `updated. From ${stringify(node.value)} to ${stringify(node.newValue)}`;
-    default:
-      return null;
-  }
+const buildersStr = {
+  removed: ({ key }, { parent }) => `Property '${getFullKey(parent, key)}' was removed`,
+  added: ({ key, value }, { parent }) => (
+    `Property '${getFullKey(parent, key)}' was added with value: ${stringify(value)}`
+  ),
+  modified: ({ key, value, newValue }, { parent }) => (
+    `Property '${getFullKey(parent, key)}' was updated. From ${stringify(value)} to ${stringify(newValue)}`
+  ),
+  nested: ({ key, children }, { plainIter, parent }) => (
+    plainIter(children, getFullKey(parent, key))
+  ),
 };
 
-const getStr = (node, { parent, plainIter }) => {
-  if (node.type === 'nested') {
-    return plainIter(node.children, getFullKey(parent, node.key));
-  }
-  return node.type !== 'unchangeable'
-    ? `Property '${getFullKey(parent, node.key)}' was ${buildStr(node)}\n`
-    : '';
+const getStr = (node, options) => {
+  const buildStr = buildersStr[node.type];
+  return buildStr(node, options);
 };
 
 const plain = (diff) => {
   const iter = (obj, parent) => {
-    const lines = obj.flatMap((node) => getStr(node, { parent, plainIter: iter }));
-    return lines.join('');
+    const lines = obj
+      .filter((node) => node.type !== 'unchangeable')
+      .flatMap((node) => getStr(node, { parent, plainIter: iter }));
+    return lines.join('\n');
   };
   return iter(diff, null);
 };
