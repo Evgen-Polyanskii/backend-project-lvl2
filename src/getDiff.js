@@ -9,7 +9,7 @@ const readFile = (file) => {
   const extension = extname(path);
   const contentsFile = readFileSync(path, 'utf8');
   return [contentsFile, extension];
-}
+};
 
 export default (file1, file2, requiredFormat = 'stylish') => {
   const [contentsFile1, extensionFile1] = readFile(file1);
