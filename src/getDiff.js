@@ -4,22 +4,19 @@ import buildDiffTree from './buildDiffTree.js';
 import parsers from './parsers.js';
 import getOutputFormat from './formatters/index.js';
 
-const getPathToFileAndExpansion = (file) => {
+const readFile = (file) => {
   const path = resolve(file);
-  const format = extname(path);
-  return [path, format];
-};
-
-const getFileContents = (file) => readFileSync(file, 'utf8');
+  const extension = extname(path);
+  const contentsFile = readFileSync(path, 'utf8');
+  return [contentsFile, extension];
+}
 
 export default (file1, file2, requiredFormat = 'stylish') => {
-  const [filePath1, formatFile1] = getPathToFileAndExpansion(file1);
-  const [filePath2, formatFile2] = getPathToFileAndExpansion(file2);
-  const contentsFile1 = getFileContents(filePath1);
-  const contentsFile2 = getFileContents(filePath2);
-  const parseFile1 = parsers(contentsFile1, formatFile1);
-  const parseFile2 = parsers(contentsFile2, formatFile2);
-  const diffTree = buildDiffTree(parseFile1, parseFile2);
+  const [contentsFile1, extensionFile1] = readFile(file1);
+  const [contentsFile2, extensionFile2] = readFile(file2);
+  const dataFile1 = parsers(contentsFile1, extensionFile1);
+  const dataFile2 = parsers(contentsFile2, extensionFile2);
+  const diffTree = buildDiffTree(dataFile1, dataFile2);
   const outputFormat = getOutputFormat(requiredFormat);
   return outputFormat(diffTree);
 };
