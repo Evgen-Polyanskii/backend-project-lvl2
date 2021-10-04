@@ -1,5 +1,7 @@
 install:
 	npm ci
+link:
+	npm link
 publish:
 	npm pablish --dry-run
 lint:

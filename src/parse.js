@@ -11,6 +11,6 @@ export default (data, extension) => {
   if (!_.has(parsers, extension)) {
     throw new Error(`Unknown extension: '${extension}'!`);
   }
-  const parser = parsers[extension];
-  return parser(data);
+  const parse = parsers[extension];
+  return parse(data);
 };
