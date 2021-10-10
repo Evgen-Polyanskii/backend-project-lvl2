@@ -33,7 +33,7 @@ const getStr = (node, options) => {
 const plain = (diff) => {
   const iter = (obj, parent) => {
     const lines = obj
-      .filter((node) => node.type !== 'unchangeable')
+      .filter((node) => node.type !== 'unmodified')
       .flatMap((node) => getStr(node, { parent, plainIter: iter }));
     return lines.join('\n');
   };

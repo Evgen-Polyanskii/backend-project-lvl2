@@ -14,7 +14,7 @@ const buildDiffTree = (object1, object2) => {
       return { key, value: value2, type: 'added' };
     }
     if (_.isEqual(value1, value2)) {
-      return { key, value: value1, type: 'unchangeable' };
+      return { key, value: value1, type: 'unmodified' };
     }
     if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
       return { key, type: 'nested', children: buildDiffTree(value1, value2) };

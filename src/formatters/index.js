@@ -2,13 +2,17 @@ import stylish from './stylish.js';
 import plain from './plain.js';
 import json from './json.js';
 
-const getOutputFormat = (requiredFormat) => {
-  const formats = {
-    stylish: (tree) => stylish(tree),
-    plain: (tree) => plain(tree),
-    json: (tree) => json(tree),
+const getFormater = (diffTree, requiredFormat) => {
+  const formatters = {
+    stylish,
+    plain,
+    json,
   };
-  return formats[requiredFormat];
+
+  if (formatters[requiredFormat] === undefined) {
+    throw new Error(`Unknown format "${requiredFormat}"`);
+  }
+  return formatters[requiredFormat](diffTree);
 };
 
-export default getOutputFormat;
+export default getFormater;

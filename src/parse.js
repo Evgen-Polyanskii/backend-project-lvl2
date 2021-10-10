@@ -2,9 +2,9 @@ import _ from 'lodash';
 import yaml from 'js-yaml';
 
 const parsers = {
-  '.yaml': (data) => yaml.load(data),
-  '.yml': (data) => yaml.load(data),
-  '.json': (data) => JSON.parse(data),
+  '.yaml': yaml.load,
+  '.yml': yaml.load,
+  '.json': JSON.parse,
 };
 
 export default (data, extension) => {

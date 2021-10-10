@@ -1,9 +1,9 @@
-/* eslint implicit-arrow-linebreak: 0 */
 import _ from 'lodash';
 
-function getMargins(depth) {
-  const marginsSize = 4;
-  const indent = ' '.repeat(marginsSize * depth);
+const tab = '    ';
+
+function getIndent(depth) {
+  const indent = tab.repeat(depth);
   return `\n${indent}`;
 }
 
@@ -11,34 +11,28 @@ function stringify(values, depth) {
   if (!_.isPlainObject(values)) {
     return `${values}`;
   }
-  const margins = getMargins(depth);
+  const indent = getIndent(depth);
   const keysAndValues = Object.entries(values);
-  const str = keysAndValues.map(([key, value]) => `    ${key}: ${stringify(value, depth + 1)}`);
-  return ['{', ...str, '}'].join(margins);
+  const str = keysAndValues.map(([key, value]) => `${tab}${key}: ${stringify(value, depth + 1)}`);
+  return ['{', ...str, '}'].join(indent);
 }
 
-const buildersStr = {
-  removed: ({ key, value }, { depth }) => `  - ${key}: ${stringify(value, depth)}`,
-  added: ({ key, value }, { depth }) => `  + ${key}: ${stringify(value, depth)}`,
-  modified: ({ key, value, newValue }, { depth }) => [
+const diffByKeyType = {
+  removed: ({ key, value }, depth) => `  - ${key}: ${stringify(value, depth)}`,
+  added: ({ key, value }, depth) => `  + ${key}: ${stringify(value, depth)}`,
+  modified: ({ key, value, newValue }, depth) => [
     `  - ${key}: ${stringify(value, depth)}`,
     `  + ${key}: ${stringify(newValue, depth)}`,
   ],
-  unchangeable: ({ key, value }, { depth }) => `    ${key}: ${stringify(value, depth)}`,
-  nested: ({ key, children }, { stylishIter, depth }) =>
-    `    ${key}: ${stylishIter(children, depth)}`,
-};
-
-const getStr = (node, options) => {
-  const buildStr = buildersStr[node.type];
-  return buildStr(node, options);
+  unmodified: ({ key, value }, depth) => `    ${key}: ${stringify(value, depth)}`,
+  nested: ({ key, children }, depth, iter) => `    ${key}: ${iter(children, depth)}`,
 };
 
 export default (object) => {
   const iter = (obj, depth) => {
-    const margins = getMargins(depth);
-    const lines = obj.flatMap((node) => getStr(node, { depth: depth + 1, stylishIter: iter }));
-    return ['{', ...lines, '}'].join(margins);
+    const indent = getIndent(depth);
+    const lines = obj.flatMap((node) => diffByKeyType[node.type](node, depth + 1, iter));
+    return ['{', ...lines, '}'].join(indent);
   };
   return iter(object, 0);
 };

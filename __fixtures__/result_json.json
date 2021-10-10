@@ -11,7 +11,7 @@
       {
         "key": "setting1",
         "value": "Value 1",
-        "type": "unchangeable"
+        "type": "unmodified"
       },
       {
         "key": "setting2",
@@ -57,7 +57,7 @@
           {
             "key": "key",
             "value": "value",
-            "type": "unchangeable"
+            "type": "unmodified"
           },
           {
             "key": "ops",
@@ -81,7 +81,7 @@
       {
         "key": "foo",
         "value": "bar",
-        "type": "unchangeable"
+        "type": "unmodified"
       },
       {
         "key": "nest",
