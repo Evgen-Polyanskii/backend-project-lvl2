@@ -6,10 +6,7 @@ const wrap = (lines, openingCurlyBrace, closingCurlyBrace, indent) => (
   [openingCurlyBrace, ...[...lines, closingCurlyBrace].map((line) => `${indent}${line}`)].join('\n')
 );
 
-const getIndent = (depth) => {
-  const indent = tab.repeat(depth);
-  return indent;
-};
+const getIndent = (depth) => tab.repeat(depth);
 
 const stringify = (values, depth) => {
   if (!_.isPlainObject(values)) {
