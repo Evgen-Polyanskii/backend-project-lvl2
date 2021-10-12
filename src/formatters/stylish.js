@@ -2,20 +2,23 @@ import _ from 'lodash';
 
 const tab = '    ';
 
-function getIndent(depth) {
-  const indent = tab.repeat(depth);
-  return `\n${indent}`;
-}
+const wrap = (lines, openingCurlyBrace, closingCurlyBrace, indent) => (
+  [openingCurlyBrace, ...[...lines, closingCurlyBrace].map((line) => `${indent}${line}`)].join('\n')
+);
 
-function stringify(values, depth) {
+const getIndent = (depth) => {
+  const indent = tab.repeat(depth);
+  return indent;
+};
+
+const stringify = (values, depth) => {
   if (!_.isPlainObject(values)) {
     return `${values}`;
   }
   const indent = getIndent(depth);
-  const keysAndValues = Object.entries(values);
-  const str = keysAndValues.map(([key, value]) => `${tab}${key}: ${stringify(value, depth + 1)}`);
-  return ['{', ...str, '}'].join(indent);
-}
+  return wrap(Object.entries(values)
+    .map(([key, value]) => `${tab}${key}: ${stringify(value, depth + 1)}`), '{', '}', indent);
+};
 
 const diffByKeyType = {
   removed: ({ key, value }, depth) => `  - ${key}: ${stringify(value, depth)}`,
@@ -31,8 +34,7 @@ const diffByKeyType = {
 export default (object) => {
   const iter = (obj, depth) => {
     const indent = getIndent(depth);
-    const lines = obj.flatMap((node) => diffByKeyType[node.type](node, depth + 1, iter));
-    return ['{', ...lines, '}'].join(indent);
+    return wrap(obj.flatMap((node) => diffByKeyType[node.type](node, depth + 1, iter)), '{', '}', indent);
   };
   return iter(object, 0);
 };
