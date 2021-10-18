@@ -26,8 +26,8 @@ const buildersStr = {
 };
 
 const plain = (diff) => {
-  const iter = (diffArr, parent) => {
-    const lines = diffArr
+  const iter = (diffTree, parent) => {
+    const lines = diffTree
       .filter((node) => node.type !== 'unmodified')
       .flatMap((node) => buildersStr[node.type](node, parent, iter));
     return lines.join('\n');
