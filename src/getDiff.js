@@ -8,7 +8,7 @@ const readFile = (file) => readFileSync(resolve(file), 'utf8');
 
 const getFileData = (file) => {
   const fileContent = readFile(file);
-  const fileExtension = extname(file);
+  const fileExtension = extname(file).slice(1);
   return parse(fileContent, fileExtension);
 };
 
